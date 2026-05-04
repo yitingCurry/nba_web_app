@@ -11,7 +11,7 @@ def get_single_player(player_name: str, season: str = Query(default="2025-26")) 
     try:
         data = get_player_data(player_name, season=season)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"NBA API error: {e}")
+        return -1
 
     if not data:
         raise HTTPException(status_code=404, detail="Player not found or data unavailable.")
