@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NBA 球員資料查詢與比較系統</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <h1>🏀 NBA 數據分析</h1>
+        <div class="divider"></div>
+        <nav class="mode-list">
+          <button class="mode-btn active" data-mode="single">單人查詢</button>
+          <button class="mode-btn" data-mode="compare">雙人比較</button>
+          <button class="mode-btn" data-mode="history">生涯歷史</button>
+          <button class="mode-btn" data-mode="team">球隊資訊</button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section id="single-panel" class="panel active">
+          <div class="card">
+            <h2>單人查詢</h2>
+            <form id="player-form">
+              <input id="player-name" type="text" placeholder="輸入球員全名 (例如 LeBron James)" required />
+              <button type="submit">🔍 查詢數據</button>
+            </form>
+            <p id="status" class="status"></p>
+          </div>
+          <div id="empty-result" class="card empty-result">尚未查詢</div>
+
+          <div id="player-result" class="player-result hidden">
+            <div class="card profile-card">
+              <img id="player-image" class="player-image" alt="player" />
+              <div class="player-meta">
+                <h2 id="player-title">球員名稱</h2>
+                <p>🏀 目前球隊: <strong id="team"></strong> | 🎯 位置: <strong id="position"></strong></p>
+                <p>📏 身高: <strong id="height"></strong> | ⚖️ 體重: <strong id="weight"></strong> | 🎂 年齡: <strong id="age"></strong></p>
+                <p>📊 生涯場均: <strong id="pts_avg"></strong> 分 / <strong id="reb_avg"></strong> 籃板 / <strong id="ast_avg"></strong> 助攻</p>
+                <p>🎓 選秀資訊: <strong id="draft_year"></strong> 年 | <strong id="draft_team"></strong> | 第 <strong id="draft_pick"></strong> 順位</p>
+              </div>
+            </div>
+
+            <div class="mid-grid">
+              <div class="card awards-card">
+                <h3 id="awards-title">生涯榮譽</h3>
+                <ul id="awards-list" class="awards-list"></ul>
+              </div>
+              <div class="card chart-card">
+                <h3 id="chart-title">生涯每季場均數據</h3>
+                <canvas id="season-chart"></canvas>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>例行賽 VS 季後賽（生涯總計）</h3>
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    <th>例行賽</th>
+                    <th>項目</th>
+                    <th>季後賽</th>
+                  </tr>
+                </thead>
+                <tbody id="vs-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="compare-panel" class="panel">
+          <div class="card">
+            <h2>雙人比較</h2>
+            <form id="compare-form">
+              <input id="compare-player1" type="text" placeholder="球員 1 (例如 LeBron James)" required />
+              <input id="compare-player2" type="text" placeholder="球員 2 (例如 Stephen Curry)" required />
+              <button type="submit">🆚 開始比較</button>
+            </form>
+            <p id="compare-status" class="status"></p>
+          </div>
+
+          <div id="compare-empty" class="card empty-result">尚未比較</div>
+
+          <div id="compare-result" class="hidden">
+            <div class="compare-top-grid">
+              <div class="card compare-player-card player1">
+                <img id="compare-img-1" class="compare-player-image" alt="player1" />
+                <h3 id="compare-name-1"></h3>
+                <p id="compare-meta-1"></p>
+                <h4 id="compare-awards-title-1">生涯榮譽</h4>
+                <ul id="compare-awards-1" class="compare-awards-list"></ul>
+              </div>
+              <div class="card compare-player-card player2">
+                <img id="compare-img-2" class="compare-player-image" alt="player2" />
+                <h3 id="compare-name-2"></h3>
+                <p id="compare-meta-2"></p>
+                <h4 id="compare-awards-title-2">生涯榮譽</h4>
+                <ul id="compare-awards-2" class="compare-awards-list"></ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>數據對照</h3>
+              <table class="duel-table">
+                <thead>
+                  <tr>
+                    <th id="duel-head-1">球員 1</th>
+                    <th>項目</th>
+                    <th id="duel-head-2">球員 2</th>
+                  </tr>
+                </thead>
+                <tbody id="duel-body"></tbody>
+              </table>
+              <p id="duel-score" class="duel-score"></p>
+            </div>
+          </div>
+        </section>
+        <section id="quiz-panel" class="panel">
+          <div class="card"><h2>NBA 小遊戲</h2><p>下一步會接上 quiz API 與作答流程。</p></div>
+        </section>
+        <section id="history-panel" class="panel">
+          <div class="card">
+            <h2>生涯歷史</h2>
+            <form id="history-form">
+              <select id="history-metric"></select>
+              <input id="history-search" type="text" placeholder="搜尋球員名稱（可留空）" />
+              <button type="submit">查詢排名</button>
+            </form>
+            <p id="history-status" class="status"></p>
+          </div>
+
+          <div class="card">
+            <h3 id="history-title">NBA 歷史總排名</h3>
+            <div class="history-table-wrap">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>排名</th>
+                    <th>球員</th>
+                    <th id="history-value-head">數值</th>
+                  </tr>
+                </thead>
+                <tbody id="history-body">
+                  <tr><td colspan="3">尚未查詢</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section id="team-panel" class="panel">
+          <div class="card">
+            <h2>球隊資訊</h2>
+            <form id="team-form">
+              <select id="team-select"></select>
+              <input id="team-season" type="text" value="2025-26" placeholder="賽季 (例如 2025-26)" />
+              <button type="submit">載入球隊</button>
+            </form>
+            <p id="team-status" class="status"></p>
+          </div>
+
+          <div id="team-empty" class="card empty-result">尚未載入球隊資料</div>
+
+          <div id="team-result" class="hidden">
+            <div class="card">
+              <h3 id="team-title">球隊資料</h3>
+              <p id="team-standing" class="team-standing"></p>
+            </div>
+
+            <div class="team-grid">
+              <div class="card">
+                <h3>教練團</h3>
+                <ul id="team-coaches" class="team-coaches"></ul>
+              </div>
+              <div class="card">
+                <h3>球員名單（點擊球員）</h3>
+                <div id="team-player-grid" class="team-player-grid"></div>
+              </div>
+            </div>
+
+            <div class="card team-player-detail hidden" id="team-player-detail">
+              <div class="team-player-header">
+                <img id="team-detail-image" class="team-detail-image" alt="player" />
+                <div>
+                  <h2 id="team-detail-name"></h2>
+                  <p id="team-detail-meta"></p>
+                  <p id="team-detail-draft"></p>
+                </div>
+              </div>
+              <h3 id="team-detail-season-title"></h3>
+              <div id="team-detail-season-stats" class="team-detail-season-stats"></div>
+              <h3>近五場比賽表現</h3>
+              <div class="team-roster-wrap">
+                <table class="team-roster-table">
+                  <thead>
+                    <tr>
+                      <th>日期</th>
+                      <th>比賽</th>
+                      <th>勝負</th>
+                      <th>得分</th>
+                      <th>籃板</th>
+                      <th>助攻</th>
+                      <th>抄截</th>
+                      <th>阻攻</th>
+                      <th>正負值</th>
+                    </tr>
+                  </thead>
+                  <tbody id="team-detail-games"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/player.js"></script>
+    <script src="/js/compare.js"></script>
+    <script src="/js/history.js"></script>
+    <script src="/js/team.js"></script>
+  </body>
+</html>
