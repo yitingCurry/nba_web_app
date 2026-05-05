@@ -20,14 +20,16 @@ const teamDetailGamesEl = document.getElementById("team-detail-games");
 let teamReady = false;
 let teamListReady = false;
 
+const API_BASE = 'https://nba-web-app-5.onrender.com';
+
 async function fetchTeams() {
-  const resp = await fetch("/api/teams");
+  const resp = await fetch(`${API_BASE}/api/teams`);
   if (!resp.ok) throw new Error("無法載入球隊清單");
   return resp.json();
 }
 
 async function fetchTeamInfo(abbr, season) {
-  const resp = await fetch(`/api/team/${encodeURIComponent(abbr)}?season=${encodeURIComponent(season)}`);
+  const resp = await fetch(`${API_BASE}/api/team/${encodeURIComponent(abbr)}?season=${encodeURIComponent(season)}`);
   if (!resp.ok) {
     const msg = await resp.text();
     throw new Error(msg || "無法載入球隊資料");
@@ -36,7 +38,7 @@ async function fetchTeamInfo(abbr, season) {
 }
 
 async function fetchPlayerDetail(name, season) {
-  const resp = await fetch(`/api/player/${encodeURIComponent(name)}?season=${encodeURIComponent(season)}`);
+  const resp = await fetch(`${API_BASE}/api/player/${encodeURIComponent(name)}?season=${encodeURIComponent(season)}`);
   if (!resp.ok) throw new Error("無法載入球員資料");
   return resp.json();
 }

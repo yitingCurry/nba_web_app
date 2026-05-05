@@ -1,5 +1,7 @@
+const API_BASE = 'https://nba-web-app-5.onrender.com';
+
 async function fetchComparison(player1, player2) {
-  const url = `/api/compare?player1=${encodeURIComponent(player1)}&player2=${encodeURIComponent(player2)}`;
+  const url = `${API_BASE}/api/compare?player1=${encodeURIComponent(player1)}&player2=${encodeURIComponent(player2)}`;
   const resp = await fetch(url);
   if (!resp.ok) {
     const msg = await resp.text();
