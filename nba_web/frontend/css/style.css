@@ -1,0 +1,563 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  background: #1a1a2e;
+  color: #eaeaea;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+.sidebar {
+  background: #0f3460;
+  padding: 16px 12px;
+}
+
+.sidebar h1 {
+  margin: 0;
+  color: #e94560;
+  font-size: 28px;
+}
+
+.divider {
+  height: 2px;
+  background: #533483;
+  margin: 16px 0;
+}
+
+.mode-list {
+  display: grid;
+  gap: 8px;
+}
+
+.mode-btn {
+  background: #16213e;
+  color: #eaeaea;
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mode-btn:hover {
+  background: #1a1a2e;
+}
+
+.mode-btn.active {
+  background: #533483;
+}
+
+.content {
+  padding: 16px;
+  overflow: auto;
+}
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+.card {
+  background: #0f3460;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #1e3f6b;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+}
+
+input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #3f4b67;
+  border-radius: 8px;
+  background: #16213e;
+  color: #eaeaea;
+}
+
+.card button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #e94560;
+  color: #fff;
+  cursor: pointer;
+}
+
+.status {
+  margin: 10px 0 0;
+  color: #e94560;
+}
+
+.hidden {
+  display: none;
+}
+
+.empty-result {
+  background: #16213e;
+  color: #a0a0a0;
+}
+
+.profile-card {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.player-image {
+  width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #16213e;
+}
+
+.player-meta h2 {
+  color: #e94560;
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.player-meta p {
+  margin: 6px 0;
+  color: #d6d7de;
+  font-size: 28px;
+}
+
+.player-meta strong {
+  color: #eaeaea;
+}
+
+.mid-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 10px;
+}
+
+.awards-card h3,
+.chart-card h3,
+.card h3 {
+  margin: 0 0 8px;
+  color: #e94560;
+  font-size: 34px;
+}
+
+.awards-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.awards-list li {
+  background: #16213e;
+  border: 1px solid #274c7b;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.chart-card canvas {
+  width: 100%;
+  height: 420px !important;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 30px;
+}
+
+.compare-table th,
+.compare-table td {
+  border-bottom: 1px solid #274c7b;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.compare-table th {
+  color: #dfe3ee;
+}
+
+.compare-table td.label {
+  color: #d0d4e0;
+}
+
+.compare-table td.regular {
+  color: #ff6b81;
+}
+
+.compare-table td.playoff {
+  color: #4ecdc4;
+}
+
+.compare-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.compare-player-card {
+  min-height: 540px;
+}
+
+.compare-player-card.player1 {
+  border-right: 2px solid #1a1a2e;
+}
+
+.compare-player-card h3 {
+  margin: 8px 0 6px;
+  font-size: 40px;
+}
+
+.compare-player-card p {
+  margin: 0;
+  color: #cfd3df;
+  font-size: 22px;
+}
+
+.compare-player-card.player1 h3 {
+  color: #ff6b81;
+}
+
+.compare-player-card.player2 h3 {
+  color: #4ecdc4;
+}
+
+.compare-player-image {
+  width: 260px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #16213e;
+  display: block;
+  margin: 0 auto;
+}
+
+.compare-player-card h4 {
+  color: #e94560;
+  font-size: 38px;
+  margin: 16px 0 10px;
+  text-align: center;
+}
+
+.compare-awards-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 230px;
+  overflow: auto;
+}
+
+.compare-awards-list li {
+  background: #16213e;
+  border: 1px solid #274c7b;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.duel-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.duel-table th,
+.duel-table td {
+  border-bottom: 1px solid #274c7b;
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.duel-table td.player1 {
+  color: #ff6b81;
+}
+
+.duel-table td.player2 {
+  color: #4ecdc4;
+}
+
+.duel-table td.metric {
+  color: #d7dbe8;
+}
+
+.duel-table td.win {
+  font-weight: 700;
+}
+
+.duel-score {
+  margin: 12px 0 0;
+  color: #d7dbe8;
+  font-size: 26px;
+}
+
+#history-metric {
+  flex: 0 0 220px;
+  padding: 10px 12px;
+  border: 1px solid #3f4b67;
+  border-radius: 8px;
+  background: #16213e;
+  color: #eaeaea;
+}
+
+.history-table-wrap {
+  max-height: 620px;
+  overflow: auto;
+  border: 1px solid #274c7b;
+  border-radius: 8px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #274c7b;
+  font-size: 20px;
+}
+
+.history-table th {
+  position: sticky;
+  top: 0;
+  background: #16213e;
+  color: #eaeaea;
+  z-index: 1;
+}
+
+.history-table td:nth-child(1) {
+  text-align: center;
+  width: 90px;
+  color: #ff6b81;
+  font-weight: 700;
+}
+
+.history-table td:nth-child(2) {
+  text-align: center;
+  color: #d9deea;
+}
+
+.history-table td:nth-child(3) {
+  text-align: center;
+  color: #4ecdc4;
+  font-weight: 700;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 10px;
+}
+
+.team-standing {
+  margin: 0;
+  color: #d9deea;
+  font-size: 22px;
+}
+
+.team-coaches {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.team-coaches li {
+  margin: 8px 0;
+  font-size: 18px;
+}
+
+.team-player-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+  max-height: 540px;
+  overflow: auto;
+}
+
+.team-player-btn {
+  background: #123a67;
+  border: 1px solid #274c7b;
+  border-radius: 8px;
+  padding: 8px;
+  color: #eaeaea;
+  cursor: pointer;
+  text-align: center;
+}
+
+.team-player-btn img {
+  width: 100%;
+  height: 92px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.team-player-btn strong {
+  display: block;
+  font-size: 15px;
+}
+
+.team-player-btn span {
+  display: block;
+  color: #b9c4da;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.team-player-detail h2 {
+  margin: 0 0 8px;
+  color: #e94560;
+  font-size: 42px;
+}
+
+.team-player-header {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.team-detail-image {
+  width: 220px;
+  height: 150px;
+  object-fit: contain;
+  background: #16213e;
+  border-radius: 8px;
+}
+
+.team-detail-season-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 8px;
+}
+
+.team-detail-season-stats > div {
+  background: #16213e;
+  border: 1px solid #274c7b;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.team-detail-season-stats strong {
+  color: #ff6b81;
+}
+
+.team-roster-wrap {
+  max-height: 520px;
+  overflow: auto;
+  border: 1px solid #274c7b;
+  border-radius: 8px;
+}
+
+.team-roster-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.team-roster-table th,
+.team-roster-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #274c7b;
+  text-align: center;
+  font-size: 16px;
+}
+
+.team-roster-table th {
+  position: sticky;
+  top: 0;
+  background: #16213e;
+}
+
+@media (max-width: 1280px) {
+  .profile-card {
+    grid-template-columns: 1fr;
+  }
+
+  .player-image {
+    width: 100%;
+    height: 280px;
+  }
+
+  .player-meta h2 {
+    font-size: 36px;
+  }
+
+  .player-meta p {
+    font-size: 22px;
+  }
+
+  .mid-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-player-header {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-player-card.player1 {
+    border-right: 0;
+  }
+
+  .compare-player-card h3 {
+    font-size: 32px;
+  }
+
+  .compare-player-card p {
+    font-size: 18px;
+  }
+
+  .compare-player-card h4 {
+    font-size: 30px;
+  }
+
+  .duel-table th,
+  .duel-table td {
+    font-size: 24px;
+  }
+
+  .awards-card h3,
+  .chart-card h3,
+  .card h3 {
+    font-size: 28px;
+  }
+
+  .compare-table {
+    font-size: 22px;
+  }
+}
