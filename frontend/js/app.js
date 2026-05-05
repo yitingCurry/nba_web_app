@@ -1,3 +1,5 @@
+const API_BASE = 'https://nba-web-app-5.onrender.com';
+
 const modeButtons = document.querySelectorAll(".mode-btn");
 const panels = {
   single: document.getElementById("single-panel"),

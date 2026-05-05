@@ -244,9 +244,7 @@ def get_player_data(player_name_input, season: str = "2025-26"):
     is_active_flag = player.get("is_active", None)
 
     try:
-        print("enter basic ok")
         basic_info = get_basic_info(player_id, is_active=is_active_flag)
-        print("basic ok")
         career_stats = get_career_stats(player_id)
         chart_and_split_stats = get_chart_and_split_stats(player_id)
         awards = get_player_awards(player_id)

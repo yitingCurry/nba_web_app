@@ -32,8 +32,6 @@ function setupMetricOptions(availableMetrics, selectedMetric) {
   });
 }
 
-const API_BASE = 'https://nba-web-app-5.onrender.com';
-
 async function fetchHistory(metric = "PTS", q = "") {
   const url = `${API_BASE}/api/history?metric=${encodeURIComponent(metric)}&limit=500&q=${encodeURIComponent(q)}`;
   const resp = await fetch(url);

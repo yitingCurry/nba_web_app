@@ -1,5 +1,3 @@
-const API_BASE = 'https://nba-web-app-5.onrender.com';
-
 async function fetchPlayer(name) {
   const resp = await fetch(`${API_BASE}/api/player/${encodeURIComponent(name)}`);
   if (!resp.ok) {
